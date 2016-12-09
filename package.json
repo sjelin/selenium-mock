@@ -1,0 +1,48 @@
+{
+  "name": "selenium-mock",
+  "version": "0.0.1",
+  "description": "A barebones mock selenium server (but easily extensible!)",
+  "main": "built/index.js",
+  "scripts": {
+    "check_format": "gulp format:enforce",
+    "format": "gulp format",
+    "prepublish": "gulp prepublish",
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angular/mock-selenium.git"
+  },
+  "keywords": [
+    "webdriverjs",
+    "webdriver",
+    "testing",
+    "selenium",
+    "mock"
+  ],
+  "author": "Sammy Jelin (sjelin@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/angular/mock-selenium/issues"
+  },
+  "homepage": "https://github.com/angular/mock-selenium#readme",
+  "devDependencies": {
+    "@types/body-parser": "0.0.33",
+    "@types/express": "^4.0.34",
+    "@types/jasmine": "^2.5.37",
+    "@types/node-uuid": "0.0.28",
+    "@types/selenium-webdriver": "^2.53.36",
+    "gulp": "^3.9.1",
+    "gulp-clang-format": "^1.0.23",
+    "jasmine": "^2.4.1",
+    "portfinder": "^1.0.10",
+    "run-sequence": "^1.1.5",
+    "selenium-webdriver": "^2.53.1",
+    "typescript": "^2.1.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "node-uuid": "^1.4.7"
+  }
+}
