@@ -19,7 +19,11 @@ describe('custom commands', () => {
   beforeAll((done) => {
     portfinder.getPort((err: Error, p: number) => {
       port = p;
-      server = new Server<MySession>(port);
+      server = new Server<MySession>(port, (basicSession) => {
+        let fullSession = basicSession as MySession;
+        fullSession.url = '';
+        return fullSession;
+      });
       server.addCommand(getUrl);
       server.addCommand(setUrl);
       server.start();
@@ -47,7 +51,10 @@ describe('custom commands', () => {
     let driver = new webdriver.Builder().
       usingServer('http://localhost:' + port + '/wd/hub').
       withCapabilities({browserName: 'chrome'}).build();
-    driver.get('http://www.google.com').then(() => {
+    driver.getCurrentUrl().then((url) => {
+      expect(url).toBe('');
+      return driver.get('http://www.google.com');
+    }).then(() => {
       return driver.getCurrentUrl();
     }).then((url) => {
       expect(url).toBe('http://www.google.com');

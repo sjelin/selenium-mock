@@ -11,9 +11,18 @@ export class Server<T extends Session> {
   app: express.Express;
   handle: ServerHandle;
   sessions: T[];
-  constructor(private port: string|number, private basePath = '/wd/hub') {
+  constructor(
+      private port: string|number, private initSession: (basicSession: Session) => T = null,
+      private basePath = '/wd/hub') {
     this.app = express();
     this.sessions = [];
+    if (initSession) {
+      // This is a fun hack yeah?
+      this.sessions.push = (...sessions: T[]) => {
+        sessions = sessions.map(initSession);
+        return Array.prototype.push.apply(this.sessions, sessions);
+      };
+    }
     this.app.use(bodyParser.json());
     this.addGlobalCommand(DefaultCommands.getStatus);
     this.addGlobalCommand(DefaultCommands.newSession);

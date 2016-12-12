@@ -29,4 +29,6 @@ export interface Capabilities {
   proxy?: Proxy;
 }
 
-export interface Session { id: string, capabilities: Capabilities }
+export class Session {
+  constructor(public id: string, public capabilities: Capabilities) {}
+}
