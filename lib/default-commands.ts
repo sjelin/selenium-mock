@@ -1,5 +1,5 @@
-import {v4 as uuid} from 'node-uuid';
 import * as os from 'os';
+import {v4 as uuid} from 'uuid';
 
 import {Command, GlobalCommand} from './command';
 import {Session} from './wd-interfaces';
