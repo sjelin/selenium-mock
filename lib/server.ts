@@ -74,6 +74,11 @@ export class Server<T extends Session> {
         for (var name in req.body) {
           req.params[name] = req.body[name];
         }
+        for (var name in req.query) {
+          if (req.params[name] === undefined) {
+            req.params[name] = req.query[name];
+          }
+        }
         Promise.resolve(command.exec(this.sessions, req.params)).then((value: any) => {
           res.json({sessionId: req.params.sessionId, status: 0, value: value});
           next();
