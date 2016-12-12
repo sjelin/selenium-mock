@@ -40,7 +40,7 @@ export class Server<T extends Session> {
     this.addGlobalCommand(DefaultCommands.getSessions);
     this.addGlobalCommand(DefaultCommands.deleteSession);
     this.addCommand(DefaultCommands.getSession);
-    this.app.get('/selenium-server/driver/', (req, res) => {
+    this.addSpecialRoute('GET', '/selenium-server/driver/', (req, res) => {
       if (req.query.cmd == 'shutDownSeleniumServer') {
         this.stop();
       } else if (req.query.cmd == 'getLogMessages') {
@@ -87,22 +87,31 @@ export class Server<T extends Session> {
         fail(e);
       }
     };
-    let cmdPath = path.join(this.basePath, command.path);
-    switch (command.method) {
+    this.addSpecialRoute(command.method, path.join(this.basePath, command.path), handle);
+  }
+
+  /**
+   * Handle a ruote directly using the Express API.  Used for special cases
+   *
+   * @param {string}
+   */
+  addSpecialRoute(
+      method: 'GET'|'POST'|'DELETE'|'PUT', path: string, handler: express.RequestHandler) {
+    switch (method) {
       case 'GET':
-        this.app.get(cmdPath, handle);
+        this.app.get(path, handler);
         break;
       case 'POST':
-        this.app.post(cmdPath, handle);
+        this.app.post(path, handler);
         break;
       case 'DELETE':
-        this.app.delete(cmdPath, handle);
+        this.app.delete(path, handler);
         break;
       case 'PUT':
-        this.app.put(cmdPath, handle);
+        this.app.put(path, handler);
         break;
       default:
-        throw new Error('Invalid method "' + command.method + '"');
+        throw new Error('Invalid method "' + method + '"');
     }
   }
 

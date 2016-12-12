@@ -33,6 +33,12 @@ export declare class Server<T extends Session> {
      */
     addGlobalCommand(command: GlobalCommand<T>): void;
     /**
+     * Handle a ruote directly using the Express API.  Used for special cases
+     *
+     * @param {string}
+     */
+    addSpecialRoute(method: 'GET' | 'POST' | 'DELETE' | 'PUT', path: string, handler: express.RequestHandler): void;
+    /**
      * Start the server
      */
     start(): void;

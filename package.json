@@ -1,6 +1,6 @@
 {
   "name": "selenium-mock",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A barebones mock selenium server (but easily extensible!)",
   "main": "built/lib/index.js",
   "types": "built/lib/index.d.ts",
