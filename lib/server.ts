@@ -11,6 +11,17 @@ export class Server<T extends Session> {
   app: express.Express;
   handle: ServerHandle;
   sessions: T[];
+
+  /**
+   * Instance a new mock server
+   *
+   * @constructor
+   * @param {string|number} port The port which the server will listen on
+   * @param {function} initSession An initialiser for any custom session.  Will receive a session
+   *   with only the `id` and `capabilities` fields filled in.
+   * @param {string} basePath The basic path for selenium commands to be executed against.  Defaults
+   *   to `/wd/hub`.
+   */
   constructor(
       private port: string|number, private initSession: (basicSession: Session) => T = null,
       private basePath = '/wd/hub') {
@@ -38,10 +49,18 @@ export class Server<T extends Session> {
     });
   }
 
+  /**
+   * Add a new command for the server to handle
+   * @param {Command<T>} command The specification for what urls to handle and how to handle them
+   */
   addCommand(command: Command<T>) {
-    this.addGlobalCommand(command.globalize());
+    this.addGlobalCommand(command._globalize());
   }
 
+  /**
+   * Add a new command for the server to handle
+   * @param {GlobalCommand<T>} command The specification for what urls to handle/how to handle them
+   */
   addGlobalCommand(command: GlobalCommand<T>) {
     let handle: express.RequestHandler = (req, res, next) => {
       function fail(e: any) {
@@ -82,10 +101,16 @@ export class Server<T extends Session> {
     }
   }
 
+  /**
+   * Start the server
+   */
   start() {
     this.handle = this.app.listen(this.port);
   }
 
+  /**
+   * Close down the server
+   */
   stop() {
     this.handle.close();
   }

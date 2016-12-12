@@ -42,7 +42,7 @@ describe('default commands (unit tests)', () => {
     });
 
     it('should find the correct session from a list', () => {
-      let result = DefaultCommands.getSession.globalize().exec([{
+      let result = DefaultCommands.getSession._globalize().exec([{
         id: 'c',
         capabilities: chromeCaps
       }, {
@@ -54,7 +54,7 @@ describe('default commands (unit tests)', () => {
 
     it('should error if it can\'t find the correct session', (done) => {
       try {
-        DefaultCommands.getSession.globalize().exec([], { sessionId: 's' });
+        DefaultCommands.getSession._globalize().exec([], { sessionId: 's' });
         done.fail('Invalid ID didn\'t throw an error');
       } catch (e) {
         expect(e.status).toBe(6);

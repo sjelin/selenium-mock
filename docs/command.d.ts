@@ -1,7 +1,4 @@
-import {posix as path} from 'path';
-
-import {Session} from './wd-interfaces';
-
+import { Session } from './wd-interfaces';
 /**
  * Defines a command which runs on the whole webdriver server - not against a particular session
  *
@@ -12,12 +9,16 @@ import {Session} from './wd-interfaces';
  *   of all sessions and an object containing all the url + json parameters.  The returned value
  *   will be returned to the client, and can be a promise.
  */
-export class GlobalCommand<T extends Session> {
-  constructor(
-      public method: 'GET'|'POST'|'DELETE'|'PUT', public path: string,
-      public exec: (sessions: T[], params: {[name: string]: any}) => any) {}
-};
-
+export declare class GlobalCommand<T extends Session> {
+    method: 'GET' | 'POST' | 'DELETE' | 'PUT';
+    path: string;
+    exec: (sessions: T[], params: {
+        [name: string]: any;
+    }) => any;
+    constructor(method: 'GET' | 'POST' | 'DELETE' | 'PUT', path: string, exec: (sessions: T[], params: {
+        [name: string]: any;
+    }) => any);
+}
 /**
  * Defines a command whcih runs against a particular session.
  *
@@ -28,21 +29,14 @@ export class GlobalCommand<T extends Session> {
  *   session indicated by `sessionId` and an object containing all the paramters.  If no such
  *   session can be found, throws an error indicating such.
  */
-export class Command<T extends Session> {
-  constructor(
-      public method: 'GET'|'POST'|'DELETE'|'PUT', public path: string,
-      public exec: (session: T, params: {[name: string]: any}) => any) {}
-
-  // Internal method
-  _globalize(): GlobalCommand<T> {
-    return new GlobalCommand<T>(
-        this.method, path.join('/session/:sessionId', this.path), (sessions, params) => {
-          for (let session of sessions) {
-            if (session.id == params['sessionId']) {
-              return this.exec(session, params);
-            }
-          }
-          throw {status: 6, message: 'No such session "' + params['sessionId'] + '"'};
-        });
-  }
+export declare class Command<T extends Session> {
+    method: 'GET' | 'POST' | 'DELETE' | 'PUT';
+    path: string;
+    exec: (session: T, params: {
+        [name: string]: any;
+    }) => any;
+    constructor(method: 'GET' | 'POST' | 'DELETE' | 'PUT', path: string, exec: (session: T, params: {
+        [name: string]: any;
+    }) => any);
+    _globalize(): GlobalCommand<T>;
 }

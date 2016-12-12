@@ -1,8 +1,8 @@
 {
   "name": "selenium-mock",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A barebones mock selenium server (but easily extensible!)",
-  "main": "built/index.js",
+  "main": "built/lib/index.js",
   "scripts": {
     "check_format": "gulp format:enforce",
     "format": "gulp format",

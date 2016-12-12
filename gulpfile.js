@@ -26,8 +26,8 @@ var runSpawn = function(done, task, opt_arg) {
 };
 
 gulp.task('copy', function() {
-  return gulp.src(['config.json', 'package.json'])
-      .pipe(gulp.dest('built/'));
+  return gulp.src(['built/lib/server.d.ts', 'built/lib/command.d.ts'])
+      .pipe(gulp.dest('docs/'));
 });
 
 gulp.task('format:enforce', () => {

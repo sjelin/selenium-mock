@@ -11,6 +11,7 @@
   },
   "exclude": [
     "built",
+    "docs",
     "node_modules"
   ]
 }
